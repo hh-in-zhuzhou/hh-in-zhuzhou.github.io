@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>  
 	  
-  	杂感 - 黄海的博客
+  	关于词法作用域与动态作用域 - 黄海的博客
   	
 	</title>
 
@@ -118,15 +118,35 @@
 			<div class="mid-col-container"> <div id="content" class="inner">
 
 	<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-		<h1 class="title" itemprop="name">杂感</h1>
+		<h1 class="title" itemprop="name">关于词法作用域与动态作用域</h1>
 		<div class="entry-content" itemprop="articleBody">
-			<p>昨个新发现的<code>MWeb</code>工具，兴奋了好一阵子。一直想要这么个类似的工具，能方便的写文档，画图，竟然就这么偶然的发现了。</p>
+			<p>以前很早就知道词法作用域的概念，还恍惚知道动态作用域，但是至于为啥做这个区分，一直不是很清楚。直到开始频繁用js时，遇到了<code>this</code>的问题，才开始注意到。</p>
 
-<p>以前用<code>latex/xetex</code>写毕业论文，吭哧吭哧写完后就再也没用过了，现在都忘光了。画图用<code>metapost</code>，虽然功能强大，但是有学习成本，还不支持中文。latex的中文支持总之别扭，时不时出问题。以前知道又个<code>pic</code>绘图语言，但是现在貌似找不到这么个东西了。</p>
+<p>原来自己一直以来用的和理解的都是<code>词法作用域</code>,也叫<code>静态作用域</code>，变量的绑定，是直观的，写在哪里就在哪里绑定，找不到就一层一层往外找，看代码就能直接看出来。</p>
 
-<p>然后没想到<code>js</code>的大发展使得这些想法在<code>markdown</code>里实现了。。。</p>
+<pre><code class="language-javascript">var a = 2;
+function test(){
+    console.log(a); // 输出是多少？
+}
 
-<p>想想上课时可以实时的画时序图来讲解，就莫名的兴奋。。。</p>
+(function (){
+    var a = 4;
+    test();
+})();
+</code></pre>
+
+<p>这一段代码，如果是<code>词法作用域</code>，那么输出结果会是<code>2</code>， 如果是<code>动态作用域</code>，结果就是<code>4</code>。</p>
+
+<p><code>词法作用域</code>取决于代码怎么写，就怎么绑定，还没运行，就能知道绑定的值在哪里。</p>
+
+<p><code>动态作用域</code>则不然，在没有运行的时候，是不知道绑定到什么值的，非得到运行时才知道，其查找规则是查看<code>函数调用栈</code>，顶层函数种找不到的变量，就往下一层的函数中寻找。很显然，如果使用第三方库的话，不知道人家的调用次序和方法的情况，不运行是根本没办法知道变量在哪个作用域进行的绑定。</p>
+
+<p>javascript的<code>this</code>，和动态作用域比较像，可是又不同，ES6的箭头函数this指针是词法作用域，传统的function定义，会根据运行时的<code>调用栈</code>，找到是谁调用了自己，以此来决定绑定，如果找不到绑定，则会默认绑定到最外围的window或nodejs的global对象，而不是传统的动态作用域的一层一层的往外找。</p>
+
+<p>绝大部份市面上的语言，都是词法作用域,比如C, C++, java, javascript等等。<br/>
+动态作用域的语言就少多了，比如lisp, perl等等。</p>
+
+<p>如果看到这里还不清楚的话，一句话可以概括：看代码就能知道结果的，是静态作用域。看代码时难以预测结果，时对时错的（完全自己写的代码能预测对，用别人的代码难以预测对，因为别人的调用顺序不知道），是动态作用域。</p>
 
 		</div>
 	</article>

@@ -122,6 +122,54 @@
 	<article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
 		<div class="meta">
 			<div class="date">
+				<time datetime="2017-07-23T20:26:37+08:00" itemprop="datePublished">2017/7/23</time>
+			</div>
+			
+			 
+			
+		</div>
+		<h1 class="title" itemprop="name"><a href="15008127972530.html" itemprop="url">
+		关于词法作用域与动态作用域</a></h1>
+		<div class="entry-content" itemprop="articleBody">
+			
+			<p>以前很早就知道词法作用域的概念，还恍惚知道动态作用域，但是至于为啥做这个区分，一直不是很清楚。直到开始频繁用js时，遇到了<code>this</code>的问题，才开始注意到。</p>
+
+<p>原来自己一直以来用的和理解的都是<code>词法作用域</code>,也叫<code>静态作用域</code>，变量的绑定，是直观的，写在哪里就在哪里绑定，找不到就一层一层往外找，看代码就能直接看出来。</p>
+
+<pre><code class="language-javascript">var a = 2;
+function test(){
+    console.log(a); // 输出是多少？
+}
+
+(function (){
+    var a = 4;
+    test();
+})();
+</code></pre>
+
+<p>这一段代码，如果是<code>词法作用域</code>，那么输出结果会是<code>2</code>， 如果是<code>动态作用域</code>，结果就是<code>4</code>。</p>
+
+<p><code>词法作用域</code>取决于代码怎么写，就怎么绑定，还没运行，就能知道绑定的值在哪里。</p>
+
+<p><code>动态作用域</code>则不然，在没有运行的时候，是不知道绑定到什么值的，非得到运行时才知道，其查找规则是查看<code>函数调用栈</code>，顶层函数种找不到的变量，就往下一层的函数中寻找。很显然，如果使用第三方库的话，不知道人家的调用次序和方法的情况，不运行是根本没办法知道变量在哪个作用域进行的绑定。</p>
+
+<p>javascript的<code>this</code>，和动态作用域比较像，可是又不同，ES6的箭头函数this指针是词法作用域，传统的function定义，会根据运行时的<code>调用栈</code>，找到是谁调用了自己，以此来决定绑定，如果找不到绑定，则会默认绑定到最外围的window或nodejs的global对象，而不是传统的动态作用域的一层一层的往外找。</p>
+
+<p>绝大部份市面上的语言，都是词法作用域,比如C, C++, java, javascript等等。<br/>
+动态作用域的语言就少多了，比如lisp, perl等等。</p>
+
+<p>如果看到这里还不清楚的话，一句话可以概括：看代码就能知道结果的，是静态作用域。看代码时难以预测结果，时对时错的（完全自己写的代码能预测对，用别人的代码难以预测对，因为别人的调用顺序不知道），是动态作用域。</p>
+
+
+			
+			
+		</div>
+
+	</article>
+ 
+	<article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+		<div class="meta">
+			<div class="date">
 				<time datetime="2017-06-26T11:40:03+08:00" itemprop="datePublished">2017/6/26</time>
 			</div>
 			
@@ -170,6 +218,15 @@ server--&gt;proxy:200 OK
 proxy-&gt;client:200 OK
 </code></pre>
 
+<pre><code class="language-gantt">dateFormat YYYY-MM-DD
+section S1
+T1: 2014-01-01, 9d
+section S2
+T2: 2014-01-11, 9d
+section S3
+T3: 2014-01-02, 9d
+</code></pre>
+
 
 			
 			
@@ -201,7 +258,7 @@ Theme by <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank 
   
     
 <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
 
 </body>
 </html>
